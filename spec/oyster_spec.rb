@@ -25,14 +25,7 @@ end
       expect{ oyster.top_up 1 }.to raise_error "Maximum balance of #{maximum_balance} exceeded."
     end
   end
-  describe "#deduct" do
-    it { is_expected.to respond_to(:deduct).with(1).argument }
-
-    it 'deducts an amount from the total balance' do
-      expect {oyster.deduct(3)}.to change {oyster.balance}.by(-3)
-    end
-  end
-
+  
   describe "#touch_in" do
     it 'knows that it is on a journey when it touches in' do
       oyster.touch_in
@@ -45,6 +38,10 @@ end
       oyster.touch_out
       expect(oyster.in_use).to eq false
     end
+    it 'charges the correct amount' do
+      oyster.touch_in
+      expect{ oyster.touch_out }.to change{ oyster.balance }.by(-Oyster::MINIMUM_CHARGE)
+    end
   end
 
   describe "#in_journey?" do
@@ -56,7 +53,7 @@ end
 
   describe "#minimum_balance" do
     it 'raises an error if their is less than £1' do
-      oyster.deduct(6)
+      5.times {oyster.touch_out}
       expect{ oyster.touch_in }.to raise_error "Insufficient balance to touch in."
     end
   end
