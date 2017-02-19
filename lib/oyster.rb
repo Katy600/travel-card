@@ -7,6 +7,10 @@ attr_reader :amount_on_card
   end
 
   def top_up(amount)
-    @amount_on_card += amount
+    if amount < 90
+      @amount_on_card += amount
+    else
+      "You have reached your maximum amount"
+    end
   end
 end

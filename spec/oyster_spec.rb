@@ -19,6 +19,10 @@ describe "#top_up" do
   end
 
 end
-describe "#maximum_top_up"
+describe "#maximum_amount" do
+  it 'prevents you from topping up over 90 pounds' do
+    expect(oyster.top_up(100)).to eq "You have reached your maximum amount"
+  end
+end
 
 end
