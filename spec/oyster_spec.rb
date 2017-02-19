@@ -1,13 +1,13 @@
 require 'oyster'
+require 'journey'
 
 describe Oyster do
-  let(:oyster) {Oyster.new}
+  let(:journey) {Journey.new}
+  let(:oyster) {Oyster.new(journey)}
   it 'has no money on the card' do
     expect(oyster.balance).to eq 5
   end
 describe "#top_up" do
-
-  it { is_expected.to respond_to(:top_up).with(1).argument }
 
   it 'can be topped up' do
     oyster.top_up(5)
@@ -25,10 +25,10 @@ end
       expect{ oyster.top_up 1 }.to raise_error "Maximum balance of #{maximum_balance} exceeded."
     end
   end
-  
+
   describe "#touch_in" do
     it 'knows that it is on a journey when it touches in' do
-      oyster.touch_in
+      oyster.touch_in("Holborn")
       expect(oyster.in_use).to eq true
     end
   end
@@ -39,7 +39,7 @@ end
       expect(oyster.in_use).to eq false
     end
     it 'charges the correct amount' do
-      oyster.touch_in
+      oyster.touch_in("Holborn")
       expect{ oyster.touch_out }.to change{ oyster.balance }.by(-Oyster::MINIMUM_CHARGE)
     end
   end
@@ -54,7 +54,7 @@ end
   describe "#minimum_balance" do
     it 'raises an error if their is less than £1' do
       5.times {oyster.touch_out}
-      expect{ oyster.touch_in }.to raise_error "Insufficient balance to touch in."
+      expect{ oyster.touch_in("Holborn") }.to raise_error "Insufficient balance to touch in."
     end
   end
 end
