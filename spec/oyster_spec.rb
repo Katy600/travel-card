@@ -26,8 +26,17 @@ end
     end
   end
   describe "#deduct" do
+    it { is_expected.to respond_to(:deduct).with(1).argument }
+
     it 'deducts an amount from the total balance' do
       expect {oyster.deduct(3)}.to change {oyster.balance}.by(-3)
+    end
+  end
+
+  describe "#touch_in" do
+    it 'knows that it is on a journey when it touches in' do
+      oyster.touch_in
+      expect(oyster.in_use).to eq true
     end
   end
 

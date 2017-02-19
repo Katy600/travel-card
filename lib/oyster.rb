@@ -1,6 +1,6 @@
 class Oyster
 MAXIMUM_BALANCE = 90
-attr_reader :balance
+attr_reader :balance, :in_use
 
   def initialize
     @balance = 5
@@ -13,5 +13,9 @@ attr_reader :balance
 
   def deduct(amount)
     @balance -= amount
+  end
+
+  def touch_in
+    @in_use = true
   end
 end
