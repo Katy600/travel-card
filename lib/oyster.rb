@@ -22,4 +22,12 @@ attr_reader :balance, :in_use
   def touch_out
     @in_use = false
   end
+
+  def in_journey?
+     if @in_use == true
+       true
+     else
+       false
+     end
+  end
 end

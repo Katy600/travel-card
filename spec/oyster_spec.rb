@@ -47,4 +47,11 @@ end
     end
   end
 
+  describe "#in_journey?" do
+    it 'allows you to check if it is on a journey' do
+      oyster.touch_out
+      expect(oyster.in_journey?).to eq false
+    end
+  end
+
 end
