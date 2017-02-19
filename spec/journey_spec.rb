@@ -17,4 +17,10 @@ describe Journey do
     oyster.touch_in("Holborn")
     expect(journey.start_station).to eq "Holborn"
   end
+
+  it 'records an end journey' do
+    oyster.touch_in("Holborn")
+    oyster.touch_out("Bank")
+    expect(journey.end_station).to eq "Bank"
+  end
 end

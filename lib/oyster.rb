@@ -23,9 +23,10 @@ attr_reader :balance, :in_use
     @journey.start_station = station
   end
 
-  def touch_out
+  def touch_out(station)
     deduct(MINIMUM_CHARGE)
     @in_use = false
+    @journey.end_station = station
   end
 
   def in_journey?

@@ -35,25 +35,25 @@ end
 
   describe "#touch_out" do
     it 'knows that it is not on a journey when it touches out' do
-      oyster.touch_out
+      oyster.touch_out("Bank")
       expect(oyster.in_use).to eq false
     end
     it 'charges the correct amount' do
       oyster.touch_in("Holborn")
-      expect{ oyster.touch_out }.to change{ oyster.balance }.by(-Oyster::MINIMUM_CHARGE)
+      expect{ oyster.touch_out("Bank") }.to change{ oyster.balance }.by(-Oyster::MINIMUM_CHARGE)
     end
   end
 
   describe "#in_journey?" do
     it 'allows you to check if it is on a journey' do
-      oyster.touch_out
+      oyster.touch_out("Bank")
       expect(oyster).not_to be_in_journey
     end
   end
 
   describe "#minimum_balance" do
     it 'raises an error if their is less than £1' do
-      5.times {oyster.touch_out}
+      5.times {oyster.touch_out("Bank")}
       expect{ oyster.touch_in("Holborn") }.to raise_error "Insufficient balance to touch in."
     end
   end
