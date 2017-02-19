@@ -24,10 +24,6 @@ attr_reader :balance, :in_use
   end
 
   def in_journey?
-     if @in_use == true
-       true
-     else
-       false
-     end
+    @in_use == true ? true : false
   end
 end
