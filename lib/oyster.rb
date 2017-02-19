@@ -18,4 +18,8 @@ attr_reader :balance, :in_use
   def touch_in
     @in_use = true
   end
+
+  def touch_out
+    @in_use = false
+  end
 end

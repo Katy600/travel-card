@@ -40,4 +40,11 @@ end
     end
   end
 
+  describe "#touch_out" do
+    it 'knows that it is not on a journey when it touches out' do
+      oyster.touch_out
+      expect(oyster.in_use).to eq false
+    end
+  end
+
 end
