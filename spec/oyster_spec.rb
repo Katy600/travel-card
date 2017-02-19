@@ -50,8 +50,14 @@ end
   describe "#in_journey?" do
     it 'allows you to check if it is on a journey' do
       oyster.touch_out
-      expect(oyster.in_journey?).to eq false
+      expect(oyster).not_to be_in_journey
     end
   end
 
+  describe "#minimum_balance" do
+    it 'raises an error if their is less than £1' do
+      oyster.deduct(6)
+      expect{ oyster.touch_in }.to raise_error "Insufficient balance to touch in."
+    end
+  end
 end

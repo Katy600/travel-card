@@ -1,5 +1,7 @@
 class Oyster
 MAXIMUM_BALANCE = 90
+MINIMUM_BALANCE = 1
+
 attr_reader :balance, :in_use
 
   def initialize
@@ -16,6 +18,7 @@ attr_reader :balance, :in_use
   end
 
   def touch_in
+    fail "Insufficient balance to touch in." if @balance < 1
     @in_use = true
   end
 
