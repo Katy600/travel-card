@@ -17,10 +17,11 @@ attr_reader :balance, :in_use, :journeys_made
       @balance += amount
   end
 
-  def touch_in(station)
+  def touch_in(entry_station: nil, entry_zone: 0)
     fail "Insufficient balance to touch in." if @balance < MINIMUM_BALANCE
     new_journey
-    @journey.entry_station = station
+    @journey.entry_station = args[:entry_station] = entry_station
+    @journey.entry_zone = args[:entry_zone] = entry_zone
     @in_use = true
   end
 
