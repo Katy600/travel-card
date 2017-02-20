@@ -20,7 +20,7 @@ attr_reader :balance, :in_use, :journeys_made
   def touch_in(station)
     fail "Insufficient balance to touch in." if @balance < MINIMUM_BALANCE
     new_journey
-    @journey.start_station = station
+    @journey.entry_station = station
     @in_use = true
   end
 
@@ -30,7 +30,7 @@ attr_reader :balance, :in_use, :journeys_made
 
   def touch_out(station)
     deduct(MINIMUM_CHARGE)
-    @journey.end_station = station
+    @journey.exit_station = station
     save_journey
     @in_use = false
   end
@@ -40,7 +40,7 @@ attr_reader :balance, :in_use, :journeys_made
   end
 
   def display_journey
-    @journeys_made.each {|journey| puts "Start Station: #{journey.start_station}, End Station: #{journey.end_station},  "}
+    @journeys_made.each {|journey| puts "Start Station: #{journey.entry_station}, End Station: #{journey.exit_station},  "}
   end
 
   def in_journey?

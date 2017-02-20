@@ -8,14 +8,13 @@ describe Oyster do
   let(:entry_station) { double :station }
   let(:exit_station) { double :station }
 
-
 describe "#initialize" do
   it 'starts with a balance of 5' do
     expect(oyster.balance).to eq 5
   end
 
   it 'starts with an empty numbery of journeys made' do
-    expect(oyster.journeys_made).to eq []
+    expect(oyster.journeys_made).to be_empty
   end
 end
 
@@ -55,6 +54,15 @@ end
     it 'charges the correct amount' do
       oyster.touch_in(entry_station)
       expect{ oyster.touch_out(exit_station) }.to change{ oyster.balance }.by(-Oyster::MINIMUM_CHARGE)
+    end
+  end
+
+  describe "#save_journey" do
+  let(:a_journey) { {entry_station: entry_station, exit_station: exit_station}}
+    xit 'stores a journey' do
+      oyster.touch_in(entry_station)
+      oyster.touch_out(exit_station)
+      expect(oyster.journeys_made).to include a_journey
     end
   end
 
