@@ -12,15 +12,15 @@ describe Journey do
   it 'has an end station that defaults to nil' do
     expect(journey.end_station).to eq nil
   end
-
-  it 'records the start journey' do
-    oyster.touch_in("Holborn")
-    expect(journey.start_station).to eq "Holborn"
-  end
-
-  it 'records an end journey' do
-    oyster.touch_in("Holborn")
-    oyster.touch_out("Bank")
-    expect(journey.end_station).to eq "Bank"
-  end
+  #
+  # it 'records the start journey' do
+  #   oyster.touch_in("Holborn")
+  #   expect(journey.start_station).to eq "Holborn"
+  # end
+  #
+  # it 'records an end journey' do
+  #   oyster.touch_in("Holborn")
+  #   oyster.touch_out("Bank")
+  #   expect(journey.end_station).to eq "Bank"
+  # end
 end

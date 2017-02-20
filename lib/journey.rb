@@ -5,6 +5,4 @@ attr_accessor :start_station, :end_station
     @start_station = station
     @end_station = station
   end
-
-
 end

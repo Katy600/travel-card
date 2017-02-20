@@ -5,11 +5,11 @@ MAXIMUM_BALANCE = 90
 MINIMUM_BALANCE = 1
 MINIMUM_CHARGE = 1
 
-attr_reader :balance, :in_use
+attr_reader :balance, :in_use, :journeys_made
 
-  def initialize(journey)
+  def initialize
     @balance = 5
-    @journey = journey
+    @journeys_made = []
   end
 
   def top_up(amount)
@@ -19,19 +19,34 @@ attr_reader :balance, :in_use
 
   def touch_in(station)
     fail "Insufficient balance to touch in." if @balance < MINIMUM_BALANCE
-    @in_use = true
+    new_journey
     @journey.start_station = station
+    @in_use = true
+  end
+
+  def new_journey
+    @journey = Journey.new
   end
 
   def touch_out(station)
     deduct(MINIMUM_CHARGE)
-    @in_use = false
     @journey.end_station = station
+    save_journey
+    @in_use = false
+  end
+
+  def save_journey
+    @journeys_made << @journey
+  end
+
+  def display_journey
+    @journeys_made.each {|journey| puts "Start Station: #{journey.start_station}, End Station: #{journey.end_station},  "}
   end
 
   def in_journey?
     @in_use == true ? true : false
   end
+
 
 private
   def deduct(amount)
