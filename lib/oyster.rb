@@ -47,7 +47,6 @@ attr_reader :balance, :in_use, :journeys_made
     @in_use == true ? true : false
   end
 
-
 private
   def deduct(amount)
     @balance -= amount
