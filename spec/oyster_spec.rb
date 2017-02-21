@@ -104,7 +104,7 @@ end
       oyster.touch_in(entry_station, 1)
       oyster.touch_out(exit_station, 3)
       oyster.calculate_fair
-      expect(oyster.display_fair).to eq(3)
+      expect(oyster.fair).to eq(3)
     end
   end
 end

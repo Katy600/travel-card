@@ -53,23 +53,25 @@ attr_reader :balance, :in_use, :journeys_made
     @in_use == true ? true : false
   end
 
-  def calculate_fair
+  def zones
     @journeys_made.collect do |journey|
-     zones =  "#{journey[:entry_zone]} #{journey[:exit_zone]}"
-     integers = zones.split.map {|digit| digit.to_i}
-     calculate = (digit1 = integers[0]) - (digit2 = integers[1])
-     fair = calculate.abs + MINIMUM_CHARGE
-     p fair
+    zones =  "#{journey[:entry_zone]} #{journey[:exit_zone]}"
+    @integers = zones.split.map {|digit| digit.to_i}
     end
   end
 
-  def display_fair
-     calculate_fair[0]
+  def calculate_fair
+    zones
+    calculate = (@integers[0]) - (@integers[1])
+    fair = calculate.abs + MINIMUM_CHARGE
+  end
+
+  def fair
+     calculate_fair
   end
 
 private
   def deduct(amount)
     @balance -= amount
   end
-
 end
