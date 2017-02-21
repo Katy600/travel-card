@@ -3,6 +3,7 @@ class Oyster
 MAXIMUM_BALANCE = 90
 MINIMUM_BALANCE = 1
 MINIMUM_CHARGE = 1
+PENALTY_FEE = 5
 
 attr_reader :balance, :in_use, :journeys_made
 
@@ -17,9 +18,17 @@ attr_reader :balance, :in_use, :journeys_made
   end
 
   def touch_in(entry_station, entry_zone)
-    fail "Insufficient balance to touch in." if @balance < MINIMUM_BALANCE
+    @in_use == true ? penalty_fee_on_touch_in : insufficient_balance?
     start_new_journey(entry_station, entry_zone)
     @in_use = true
+  end
+
+  def penalty_fee_on_touch_in
+    @balance -= PENALTY_FEE
+  end
+
+  def insufficient_balance?
+    fail "Insufficient balance to touch in." if @balance < MINIMUM_BALANCE
   end
 
   def start_new_journey(entry_station, entry_zone)
@@ -64,7 +73,7 @@ attr_reader :balance, :in_use, :journeys_made
   def calculate_fair
     find_zones
     calculate = (@integers[0]) - (@integers[1])
-    fair = calculate.abs + MINIMUM_CHARGE
+    calculate.abs + MINIMUM_CHARGE
   end
 
   def fair

@@ -40,6 +40,13 @@ end
       oyster.touch_in(entry_station, 3)
       expect(oyster.in_use).to eq true
     end
+
+    it 'charges a penalty fee of 5 if the user touches in twice' do
+      oyster.top_up(5)
+      oyster.touch_in(entry_station, 3)
+      oyster.touch_in(entry_station, 3)
+      expect(oyster.balance).to eq 5
+    end
   end
 
   describe "#start_new_journey" do
