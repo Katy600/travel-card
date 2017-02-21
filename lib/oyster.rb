@@ -29,9 +29,10 @@ attr_reader :balance, :in_use, :journeys_made
   end
 
   def touch_out(exit_station, exit_zone)
-    deduct(MINIMUM_CHARGE)
     end_journey(exit_station, exit_zone)
     save_journey
+    calculate_fair
+    deduct
     @in_use = false
   end
 
@@ -53,7 +54,7 @@ attr_reader :balance, :in_use, :journeys_made
     @in_use == true ? true : false
   end
 
-  def zones
+  def find_zones
     @journeys_made.collect do |journey|
     zones =  "#{journey[:entry_zone]} #{journey[:exit_zone]}"
     @integers = zones.split.map {|digit| digit.to_i}
@@ -61,17 +62,17 @@ attr_reader :balance, :in_use, :journeys_made
   end
 
   def calculate_fair
-    zones
+    find_zones
     calculate = (@integers[0]) - (@integers[1])
     fair = calculate.abs + MINIMUM_CHARGE
   end
 
   def fair
-     calculate_fair
+    calculate_fair
   end
 
 private
-  def deduct(amount)
-    @balance -= amount
+  def deduct
+    @balance -= fair
   end
 end
