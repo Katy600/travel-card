@@ -98,4 +98,13 @@ end
       expect{ oyster.touch_in(entry_station, 3) }.to raise_error "Insufficient balance to touch in."
     end
   end
+
+  describe "#calculate_fair" do
+    it 'calculates the total cost of a journey' do
+      oyster.touch_in(entry_station, 1)
+      oyster.touch_out(exit_station, 3)
+      oyster.calculate_fair
+      expect(oyster.display_fair).to eq(3)
+    end
+  end
 end
