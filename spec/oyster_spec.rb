@@ -29,10 +29,9 @@ describe "#top_up" do
 end
 
   describe "#maximum_balance" do
-    xit 'raises an error if the maximum balance is exceeded' do
-      maximum_balance = Oyster::MAXIMUM_BALANCE
-      oyster.top_up(maximum_balance)
-      expect{ oyster.top_up 1 }.to raise_error "Maximum balance of #{maximum_balance} exceeded."
+    it 'raises an error if the maximum balance is exceeded' do
+      maximum_balance = 90
+      expect{ oyster.top_up(95) }.to raise_error "Maximum balance of #{maximum_balance} exceeded."
     end
   end
 
