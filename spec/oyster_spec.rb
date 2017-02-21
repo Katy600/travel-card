@@ -43,10 +43,8 @@ end
     end
   end
 
-  describe "#save_journey_entry_data" do
+  describe "#start_new_journey" do
     it "saves the entry station and entry zone information" do
-      #  allow(oyster).to receive(touch_in).and_return(entry_station, 3)
-      #  allow(oyster).to receive(touch_out).and_return(entry_station, 4)
       oyster.touch_in(entry_station, 3)
       oyster.touch_out(exit_station, 4)
       journey = oyster.journeys_made.first
@@ -55,7 +53,7 @@ end
     end
   end
 
-  describe "#save_journey_exit_data" do
+  describe "#end_journeys" do
     it "saves the exit station and exit zone information" do
        oyster.touch_in(entry_station, 3)
        oyster.touch_out(exit_station, 4)
@@ -79,11 +77,10 @@ end
   end
 
   describe "#save_journey" do
-  let(:a_journey) { {entry_station: entry_station, exit_station: exit_station}}
-    xit 'stores a journey' do
+    it 'stores a journey in journeys_made' do
       oyster.touch_in(entry_station, 3)
       oyster.touch_out(exit_station, 3)
-      expect(oyster.journeys_made).to include a_journey
+      expect(oyster.journeys_made.length).to eq 1
     end
   end
 
