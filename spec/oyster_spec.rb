@@ -56,11 +56,12 @@ end
   end
 
   describe "#save_journey_exit_data" do
-    xit "saves the exit station and exit zone information" do
+    it "saves the exit station and exit zone information" do
        oyster.touch_in(entry_station, 3)
        oyster.touch_out(exit_station, 4)
-      expect(journey.exit_station).to eq(exit_station)
-      expect(journey.exit_zone).to eq(4)
+       journey = oyster.journeys_made.first
+       expect(journey[:exit_station]).to eq(exit_station)
+       expect(journey[:exit_zone]).to eq(4)
     end
   end
 
