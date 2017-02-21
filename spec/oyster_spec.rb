@@ -1,5 +1,4 @@
 require 'oyster'
-require 'journey'
 
 describe Oyster do
 
@@ -45,13 +44,14 @@ end
   end
 
   describe "#save_journey_entry_data" do
-    xit "saves the entry station and entry zone information" do
-       allow(oyster).to receive(touch_in).and_return(entry_station, 3)
-       allow(oyster).to receive(touch_out).and_return(entry_station, 4)
-      # oyster.touch_in(entry_station, 3)
-      # oyster.touch_out(exit_station, 4)
-      expect(journey.entry_station).to eq(entry_station)
-      expect(journey.entry_zone).to eq(3)
+    it "saves the entry station and entry zone information" do
+      #  allow(oyster).to receive(touch_in).and_return(entry_station, 3)
+      #  allow(oyster).to receive(touch_out).and_return(entry_station, 4)
+      oyster.touch_in(entry_station, 3)
+      oyster.touch_out(exit_station, 4)
+      journey = oyster.journeys_made.first
+      expect(journey[:entry_station]).to eq(entry_station)
+      expect(journey[:entry_zone]).to eq(3)
     end
   end
 

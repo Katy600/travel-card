@@ -1,4 +1,3 @@
-require_relative 'journey'
 
 class Oyster
 MAXIMUM_BALANCE = 90
@@ -19,38 +18,35 @@ attr_reader :balance, :in_use, :journeys_made
 
   def touch_in(entry_station, entry_zone)
     fail "Insufficient balance to touch in." if @balance < MINIMUM_BALANCE
-    new_journey
-    save_journey_entry_data(entry_station, entry_zone)
+    start_new_journey(entry_station, entry_zone)
     @in_use = true
   end
 
-  def save_journey_entry_data(entry_station, entry_zone)
-    @journey.entry_station = entry_station
-    @journey.entry_zone = entry_zone
-  end
-
-  def new_journey
-    @journey = Journey.new
+  def start_new_journey(entry_station, entry_zone)
+    @start_journey = Hash.new
+    @start_journey[:entry_station] = entry_station
+    @start_journey[:entry_zone] = entry_zone
   end
 
   def touch_out(exit_station, exit_zone)
     deduct(MINIMUM_CHARGE)
-    save_journey_exit_data(exit_station, exit_zone)
+    end_journey(exit_station, exit_zone)
     save_journey
     @in_use = false
   end
 
-  def save_journey_exit_data(exit_station, exit_zone)
-    @journey.exit_station = exit_station
-    @journey.exit_zone = exit_zone
+  def end_journey(exit_station, exit_zone)
+    @journey_destination = Hash.new
+    @journey_destination[:exit_station] = exit_station
+    @journey_destination[:exit_zone] = exit_zone
   end
 
   def save_journey
-    @journeys_made << @journey
+    @journeys_made << @start_journey.merge(@journey_destination)
   end
 
   def display_journey
-    @journeys_made.each {|journey| puts "Entry Station: #{journey.entry_station}, Zone:#{journey.entry_zone}, Exit Station: #{journey.exit_station}, Zone:#{journey.exit_zone}  "}
+    @journeys_made.collect {|journey| puts "Entry Station: #{journey[:entry_station]}, Zone:#{journey[:entry_zone]}, Exit Station: #{journey[:exit_station]}, Zone:#{journey[:exit_zone]}" }
   end
 
   def in_journey?
