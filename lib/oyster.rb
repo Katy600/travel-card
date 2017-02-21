@@ -10,6 +10,7 @@ attr_reader :balance, :in_use, :journeys_made
   def initialize
     @balance = 5
     @journeys_made = []
+    @in_use = false
   end
 
   def top_up(amount)
@@ -18,13 +19,14 @@ attr_reader :balance, :in_use, :journeys_made
   end
 
   def touch_in(entry_station, entry_zone)
-    @in_use == true ? penalty_fee_on_touch_in : insufficient_balance?
+    @in_use == true ? penalty_fee : insufficient_balance?
     start_new_journey(entry_station, entry_zone)
     @in_use = true
   end
 
-  def penalty_fee_on_touch_in
+  def penalty_fee
     @balance -= PENALTY_FEE
+    print "A penality of £#{PENALTY_FEE} has been deducted from your balance. "
   end
 
   def insufficient_balance?
@@ -38,6 +40,7 @@ attr_reader :balance, :in_use, :journeys_made
   end
 
   def touch_out(exit_station, exit_zone)
+    return penalty_fee if @in_use == false
     end_journey(exit_station, exit_zone)
     save_journey
     calculate_fair

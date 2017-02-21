@@ -12,7 +12,7 @@ describe "#initialize" do
     expect(oyster.balance).to eq 5
   end
 
-  it 'starts with an empty numbery of journeys made' do
+  it 'starts with an empty number of journeys made' do
     expect(oyster.journeys_made).to be_empty
   end
 end
@@ -79,6 +79,11 @@ end
     it 'charges the correct amount' do
       oyster.touch_in(entry_station, 3)
       expect{ oyster.touch_out(exit_station, 3) }.to change{ oyster.balance }.by(-Oyster::MINIMUM_CHARGE)
+    end
+
+    it 'charges a penalty fee of 5 if the user touches out twice' do
+      oyster.top_up(5)
+      expect {oyster.touch_out(entry_station, 3)}.to change {oyster.balance}.by(-5)
     end
   end
 
