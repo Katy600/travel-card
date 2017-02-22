@@ -4,7 +4,7 @@ class JourneyLog
   attr_reader :journeys_made
 
   def initialize
-    @journeys_made = []
+     @journeys_made = []
   end
 
   def entry_journey_details(entry_station, entry_zone)
@@ -21,6 +21,7 @@ class JourneyLog
 
   def save_journey
     @journeys_made << @start_journey.merge(@journey_destination)
+  # p @journeys_made
   end
 
   def display_journey
